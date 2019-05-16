@@ -101,6 +101,11 @@
 .Ic wdc get-crash-dump
 .Op Fl o path_template
 .Aq device id
+.Nm
+.Ic aws
+.Op Fl d
+.Op Fl v
+.Aq device
 .\" .Nm
 .\" .Ic wdc purge
 .\" .Aq device id
@@ -160,6 +165,12 @@ the drive's serial number and the type of dump it is followed
 by .bin.
 These logs must be sent to the vendor for analysis.
 This tool only provides a way to extract them.
+.Ss aws
+The aws command retrieves the device name that was specified when the
+volume was created, the AWS volume id, or both.  For compatibility
+with the Amazon Linux ebsnvme-id script, if the device name has a
+"/dev/" prefix, it is removed.  Likewise, if the volume id does not
+include a "-" between the "vol" and the ID, one is inserted.
 .Sh EXAMPLES
 .Dl nvmecontrol devlist
 .Pp
@@ -230,6 +241,20 @@ Set the current power mode.
 .Dl nvmecontrol power nvme0
 .Pp
 Get the current power mode.
+.Pp
+.Dl nvmecontrol aws nvme1
+.Pp
+Get both the device name and the AWS volume id.
+.Pp
+.Dl nvmecontrol aws -d nvme1
+.Pp
+Get the device name that was specified when the AWS volume was created
+(e.g. "/dev/sdh").
+.Pp
+.Dl nvmecontrol aws -v nvme1
+.Pp
+Get the volume id of the AWS volume (e.g. "Volume ID:
+vol-0320fb82a1f2610ec").
 .Sh HISTORY
 The
 .Nm
